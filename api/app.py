@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, jsonify
-from flask_mail import Mail, Message
+# from flask_mail import Mail, Message
+from envioEmail import enviar_email, Contato
 import os # Buscar no sistema operacional
 # Importações necessárias de ferramentas
 
@@ -9,59 +10,44 @@ app = Flask(__name__)
 # Criptografar transições externas
 app.secret_key = 'ABCabc123#'
 
-mail_settings = {
-    "MAIL_SERVER": "smtp.gmail.com",
-    "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": os.environ.get("EMAIL"),
-    "MAIL_PASSWORD": os.environ.get("SENHA")   
-}
+#------------------------------------------------------------------------------
+# mail_settings = {
+#     "MAIL_SERVER": "smtp.gmail.com",
+#     "MAIL_PORT": 465,
+#     "MAIL_USE_TLS": False,
+#     "MAIL_USE_SSL": True,
+#     "MAIL_USERNAME": os.environ.get("EMAIL"),
+#     "MAIL_PASSWORD": os.environ.get("SENHA")   
+# }
 
-app.config.update(mail_settings)
-# Colocar as configurações no app
+# app.config.update(mail_settings)
+# # Colocar as configurações no app
 
-mail = Mail(app)
+# mail = Mail(app)
+#------------------------------------------------------------------------------
 
-class Contato:
-    def __init__(self, nome, email, mensagem):
-        self.nome = nome,
-        self.email = email,
-        self.mensagem = mensagem
-
-# Rota inicial, sem nome, ou seja, sem precisar digitar algo a mais depois do localhost na URL.
+# Rota inicial, com o nome que quiser
 # Toda rota é seguida de função, esta será a renderização.
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Envio de e-mail
 @app.route('/send', methods=['GET', 'POST'])
 def send():
-    # if(request.method == 'POST'):
-        # formContato = Contato(
-        #     request.form["nome"],
-        #     request.form["email"],
-        #     request.form["mensagem"]
-        # )
+    if(request.method == 'POST'):
+        formContato = Contato(
+            request.form["nome"],
+            request.form["email"],
+            request.form["assunto"],
+            request.form["mensagem"]
+        )
 
-        # msg = Message(
-        #     subject=f'{formContato.nome} te enviou uma mensagem no portfólio',
-        #     sender=app.config.get('MAIL_USERNAME'),
-        #     recipients= ['alessandrateles911@gmail.com', app.config.get('MAIL_USERNAME')],
-        #     body= f'''
-            
-        #     {formContato.nome} com o e-mail {formContato.email} te enviou a seguinte mensagem
+        enviar_email(formContato)
 
-        #     {formContato.mensagem}
-            
-        #     '''
-
-        # )
-
-        # mail.send(msg)
         # Mensagem enviada com sucesso!
-    success_message = 'Ainda sendo implementado.'
-    error_message = 'Erro ao enviar o formulário. Por favor, tente novamente mais tarde.'
+        success_message = 'Ainda sendo implementado.'
+        error_message = 'Erro ao enviar o formulário. Por favor, tente novamente mais tarde.'
         
     if(request.method == 'POST'): #condicao para saber se foi ou nao 
         return jsonify(message=success_message, success=True)
