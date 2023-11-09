@@ -1,0 +1,15 @@
+Outra forma de acessar o arquivo json de token da conta de serviço
+
+    import json
+
+    with open('token_service.json') as arquivo_json:
+        credenciais = service_account.Credentials.from_service_account_info(json.load(arquivo_json))
+
+Trocar nome de uma classe específica
+
+    alerta.className = alerta.className.replace('alert-warning', 'alert-success');   
+
+Links
+https://www.gmass.co/smtp-test -> Teste de SMTP
+https://youtu.be/TrdWr3BmqT8?si=MT9vl5DKkX15rGrn -> Tutorial de Envio de E-mail pelo smtp do Gmail
+-------------------------------------------------------------------------------------------------------------

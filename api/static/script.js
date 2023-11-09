@@ -1,5 +1,4 @@
 /* Abre e fecha menu lateral em modo mobile */
-
 const menuMobile = document.querySelector('.menu-mobile')
 const body =  document.querySelector('body')
 const menuClick = document.querySelectorAll('.nav-item')
@@ -19,7 +18,6 @@ menuClick.forEach(item => {
 })
 
 /* Animação com atributo data-anime */
-
 const item = document.querySelectorAll("[data-anime]");
 
 const animeScroll = () => {
@@ -36,9 +34,7 @@ const animeScroll = () => {
 animeScroll()
 window.addEventListener("scroll", animeScroll)
 
-// ACTIONS
-
-// Envio de E-mail
+// ACTIONS -> ENVIO DE E-MAIL
 const btnEnviar =  document.querySelector('#btn-enviar')
 const form = document.getElementById('form');
 const alerta  = document.getElementById('alerta');
@@ -46,9 +42,46 @@ const iconAlerta = document.getElementById('iconAlerta')
 const message  = document.getElementById('message');
 const closeButton = document.getElementById('closeButton');
 
+// Funções de Mudanças Dinâmicas
+
+function iniciarLoading(){
+    btnEnviar.disabled = true;
+    spanLoading = 
+        '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>'+
+        '<span role="status"> Enviando...</span>';
+    btnEnviar.innerHTML = spanLoading;
+}
+function terminarLoading(){
+    spanText = '<span role="status">Enviar mensagem</span>';
+    btnEnviar.disabled = false;
+    btnEnviar.innerHTML = spanText;
+}
+function alertModal(response){
+    if(response){
+        alerta.className = alerta.className.replace(/\b(alert-warning|alert-danger)\b/g, 'alert-success');
+        iconAlerta.className = iconAlerta.className.replace('bi-exclamation-circle-fill', 'bi-check-circle-fill');
+    }else{
+        alerta.className = alerta.className.replace(/\b(alert-success|alert-warning)\b/g, 'alert-danger');
+        iconAlerta.className = iconAlerta.className.replace('bi-check-circle-fill', 'bi-exclamation-circle-fill');
+    }
+}
+function limpezaCampos(){
+    document.querySelector('#nome').value = '';
+    document.querySelector('#assunto').value = '';
+    document.querySelector('#email').value = '';
+    document.querySelector('#mensagem').value = '';
+}
+function alertTemporizado(){
+    // Sumir o alerta depois de 5seg
+    setTimeout(() => {
+        alerta.style.display = 'none'
+    }, 5000)
+}
+
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    // Validação de campos
     const formData = new FormData(form);
     valuesFormData = [];
     count = 0;
@@ -60,12 +93,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     if(count == valuesFormData.length){
-        // Load para envio de e-mail
-        btnEnviar.disabled = true;
-        spanLoading = 
-            '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>'+
-            '<span role="status"> Enviando...</span>';
-        btnEnviar.innerHTML = spanLoading;
+        iniciarLoading();
 
         // POST 
         const response = await fetch('/send',{
@@ -75,35 +103,27 @@ form.addEventListener('submit', async (event) => {
 
         if(response.ok){ //200 OK
             const data = await response.json();
-            if(data.success){
-                alerta.className = alerta.className.replace(/\b(alert-warning|alert-danger)\b/g, 'alert-success');
-                iconAlerta.className = iconAlerta.className.replace('bi-exclamation-circle-fill', 'bi-check-circle-fill');
-                message.textContent = data.message;
-            }else{
-                alerta.className = alerta.className.replace(/\b(alert-success|alert-danger)\b/g, 'alert-warning');
-                iconAlerta.className = iconAlerta.className.replace('bi-check-circle-fill', 'bi-exclamation-circle-fill');
-                message.textContent = data.message;
-            }
+            alertModal(data.success);
+            resultadoEnvio = data.success;
+            message.textContent = data.message;
         }else{
-            alerta.className = alerta.className.replace(/\b(alert-success|alert-warning)\b/g, 'alert-danger');
-            iconAlerta.className = iconAlerta.className.replace('bi-check-circle-fill', 'bi-exclamation-circle-fill');
+            alertModal(response.ok)
             message.textContent = 'Erro ao enviar o formulário. Por favor, tente novamente mais tarde.';
         }
 
         alerta.style.display = 'block';
 
-        spanText = '<span role="status">Enviar mensagem</span>';
-        btnEnviar.disabled = false;
-        btnEnviar.innerHTML = spanText;
-
-        document.querySelector('#nome').value = '';
-        document.querySelector('#email').value = '';
-        document.querySelector('#mensagem').value = '';
-
-        // Sumir o alerta depois de 5seg
+        terminarLoading();
+        limpezaCampos();
+        alertTemporizado();
         setTimeout(() => {
-            alerta.style.display = 'none'
-        }, 5000)
+            if(resultadoEnvio){
+                alertModal(resultadoEnvio);
+                message.textContent = 'Verifique sua caixa de entrada para mais detalhes.';
+                alerta.style.display = 'block'
+                alertTemporizado();
+            }
+        }, 6000)
     }
 });
 
@@ -111,8 +131,3 @@ form.addEventListener('submit', async (event) => {
 closeButton.addEventListener('click', () => {
     alerta.style.display = 'none'; 
 });
-
-
-// Para salvar códigos:
-
-// alerta.className = alerta.className.replace('alert-warning', 'alert-success');
