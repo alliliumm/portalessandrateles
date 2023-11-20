@@ -1,3 +1,8 @@
+"""
+Este módulo serve para executar o envio de e-mails do usuário.
+Inclui funções necessárias para sua execução.
+"""
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -57,7 +62,7 @@ def enviar_email(formContato):
 
         servidor_smtp.sendmail(remetente, destinatario, msg.as_string())
 
-        corpo_email = f'''
+        corpo_email = '''
             <p>Vamos lá</p>
         '''
 
