@@ -123,7 +123,7 @@ def send():
         mensagem = "Erro ao enviar o e-mail: Não foi possível concluir sua requisição."
         sucesso = False
 
-        return jsonify(message=mensagem, success=sucesso)
+    return jsonify(message=mensagem, success=sucesso)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
