@@ -15,7 +15,7 @@ html, body {
     top: 0;
     left: 0;  /* .menu-nav-active #header*/
     bottom: 0;
-    background: #021124;
+    background: #3c0917;
     overflow-y: auto; /* .menu-nav-active */
     width: 300px; /* @media */
     transition: all ease-in-out 0.5s;
@@ -31,6 +31,11 @@ html, body {
     border-radius: 50%;
 }
 
+#header .profile img:hover { 
+    border: 8px solid #ee050e;
+    transition: all ease-in-out 0.5s;
+}
+
 #header .profile h1 {
     font-size: 24px;
     margin: 0;
@@ -42,7 +47,7 @@ html, body {
 
 #header .profile .social-links a {
     font-size: 1rem;
-    background: #212431;
+    /* background: #212431; */
     color: #fff;
     padding: 0.6rem;
     margin-right: 1rem;
@@ -52,7 +57,7 @@ html, body {
 }
 
 #header .profile .social-links a:hover {
-    background: #149ddd;
+    background: #ee050e;
 }
 
 /* Nav Vertical */
@@ -88,7 +93,7 @@ html, body {
 .nav-menu .active i,
 .nav-menu .active:focus i,
 .nav-menu li:hover > a i {
-    color: #149ddd;
+    color: #ee050e;
 }
 
 /* Ícone Menu Responsivo */
@@ -96,7 +101,7 @@ html, body {
 i.menu-mobile {
     position:fixed;
     color: #fff;
-    background-color: #252c90;
+    background-color: #670c0c;
     right: 1rem;
     top: 1rem;
     font-size: 1.5rem;
@@ -119,7 +124,8 @@ i.menu-mobile {
 }
 
 section#inicio {
-    background-image: url("./img/Header2.jpeg");
+    /* background-image: url("./img/Header2.jpeg"); */
+    background-color: black;
     background-repeat: no-repeat; /* Não repetir */
     background-size: cover; /* Ocupar o espaço que possui */
     background-attachment: fixed; /* Fixar a imagem no lugar mesmo rolando a tela */
@@ -149,6 +155,15 @@ section#inicio div#arraste a{
     color: #fff;
 }
 
+section#inicio div#arraste a:hover {
+    color: #ee050e;
+    transition: 0.5s;
+}
+
+section#inicio div#arraste a i:hover {
+    color: #ee050e;
+    transition: 0.5s;
+}
 /* Barra de Scroll */
 
 *::-webkit-scrollbar {  /* Aplicando para todos os elementos da tela */
@@ -167,7 +182,7 @@ section#inicio div#arraste a{
 }
 
 *::-webkit-scrollbar-thumb { /* Barra de scroll */
-    background-color: #252c90;
+    background-color: #ee050e;
     border-radius: 10%;
 }
 
@@ -175,6 +190,10 @@ section#inicio div#arraste a{
 
 .section-bg {
     background-color: #eff5ff;
+}
+
+.progress, .progress-stacked {
+    --bs-progress-bar-bg: #670c0c;
 }
 
 /* Currículo */
@@ -189,7 +208,7 @@ section#inicio div#arraste a{
 .cv .cv-item {
     padding: 0 0 20px 20px;
     margin-top: -2px;
-    border-left: 2px solid #1f5297;
+    border-left: 2px solid #670c0c;
     position: relative;
 }
 
@@ -217,7 +236,7 @@ section#inicio div#arraste a{
     left: -9px;
     width: 16px;
     height: 16px;
-    border: 2px solid #1f5297;
+    border: 2px solid #670c0c;
     background: #fff;
     border-radius: 50%;
 }
@@ -234,6 +253,20 @@ section#inicio div#arraste a{
 
 .carousel-indicators {
     margin-bottom: -35px;
+}
+
+/* Contato */
+
+#btn-enviar {
+    background: #670c0c;
+    border: 2px solid #670c0c;
+}
+
+#btn-enviar:focus, 
+#btn-enviar:hover {
+    background: #390606;
+    border: 2px solid #390606;
+    transition: 0.2s;
 }
 
 /* -- ANIMAÇÃO -- */
@@ -285,7 +318,7 @@ section#inicio div#arraste a{
     bottom: 0;
     width: 300px;
     z-index: 9999;
-    background-color: #021124;
+    background-color: #3c0917;
     transition: 0.5s;
 }
 

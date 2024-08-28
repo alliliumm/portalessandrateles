@@ -13,3 +13,9 @@ Links
 https://www.gmass.co/smtp-test -> Teste de SMTP
 https://youtu.be/TrdWr3BmqT8?si=MT9vl5DKkX15rGrn -> Tutorial de Envio de E-mail pelo smtp do Gmail
 -------------------------------------------------------------------------------------------------------------
+
+python3 -m venv ambPortAlePy -> Criar Ambiente virtual
+source ambPortAlePy/bin/activate -> Ativar Ambiente
+pip freeze > requirements.txt -> Com todas as bibliotecas do projeto
+pip install -r requirements.txt -> Instalar no ambiente
+deactivate -> Desativar Ambiente 
